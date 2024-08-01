@@ -1,0 +1,1468 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <link rel="icon" type="image/png" href="/path/to/your/logo.png"> <!--logo-->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasbih Counter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+
+
+.button {
+    background-color: #3498db;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 10px 0;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    margin-right: 10px;
+}
+
+.button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.button:active {
+    background-color: #1c6d9b;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+}
+
+@media screen and (max-width: 768px) {
+    .button {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+
+
+
+@media screen and (max-width: 1200px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    #press {
+        width: 150px;
+        height: 150px;
+        font-size: 1rem;
+    }
+
+    .dua {
+        font-size: 1.5rem;
+    }
+
+    .tafsir {
+        padding: 0.8rem;
+        font-size: 1rem;
+    }
+
+    #counter-display {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    section {
+        padding: 3rem 1rem;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    #press {
+        width: 120px;
+        height: 120px;
+        font-size: 0.9rem;
+    }
+
+    .dua {
+        font-size: 1.2rem;
+    }
+
+    .tafsir {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    #counter-display {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    #press {
+        width: 100px;
+        height: 100px;
+        font-size: 0.8rem;
+    }
+
+    .dua {
+        font-size: 1rem;
+    }
+
+    .tafsir {
+        padding: 0.4rem;
+        font-size: 0.8rem;
+    }
+
+    #counter-display {
+        width: 25px;
+        height: 25px;
+        font-size: 0.8rem;
+    }
+
+    nav button {
+        font-size: 0.8rem;
+    }
+}
+.btn-category {
+    background-color: #3498db;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    margin: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-category:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.btn-category:active {
+    background-color: #1c6d9b;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+}
+
+@media (max-width: 768px) {
+    .btn-category {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin: 5px;
+    }
+}
+
+
+
+
+
+
+
+
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            padding: 0 1rem; 
+        }
+
+        section {
+            padding: 4rem 2rem;
+            width: 100%;
+            max-width: 800px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            position: relative;
+            display: none;
+        }
+
+        section.active {
+            opacity: 1;
+            transform: translateY(0);
+            display: block;
+        }
+
+        h1 {
+            color: #343a40;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        #press {
+            width: 100%;
+            max-width: 200px;
+            height: 200px;
+            border: none;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            background-color:#6b6e72;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        #press:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        #counter-display {
+            background-color:#343a40;
+            font-weight: bold;
+            height: 50px;
+            font-size: 1.5rem;
+            width: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+            color: white;
+            margin: 0 auto 2rem auto;
+        }
+
+       
+
+        .dua {
+            color: #212529;
+            font-weight: bold;
+            font-size: 1.8rem;
+            padding: 1rem 0;
+            line-height: 1.5;
+            transition: color 0.3s ease;
+        }
+
+        .tafsir {
+            background-color: #e9ecef;
+            border-radius: 8px;
+            padding: 1rem;
+            color: #495057;
+            margin: 1rem 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .section-divider {
+            height: 1px;
+            background-color: #dee2e6;
+            margin: 3rem 0;
+            transition: background-color 0.3s ease;
+        }
+
+        nav {
+            background-color: #343a40;
+            color: white;
+            padding: 1rem 0;
+            width: 100%;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: background-color 0.3s ease;
+        }
+
+        nav button {
+            background-color: transparent;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0 0.5rem;
+            transition: background-color 0.3s ease;
+        }
+
+        nav button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        #dark-mode-toggle {
+            width: 60px;
+            height: 30px;
+            border: none;
+            background-color: #ccc;
+            border-radius: 15px;
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.3s ease;
+            margin-left: 1rem;
+        }
+
+        #dark-mode-toggle:before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background-color: white;
+            border-radius: 50%;
+            transition: left 0.3s ease;
+        }
+
+        .dark-mode #dark-mode-toggle:before {
+            left: 26px;
+        }
+
+        body.dark-mode #dark-mode-toggle {
+            background-color: #ced4da;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #f8f9fa;
+        }
+
+        body.dark-mode h1,
+        body.dark-mode .dua,
+        body.dark-mode .section-divider {
+            color: #f8f9fa;
+        }
+
+        body.dark-mode .tafsir {
+            background-color: #212529;
+            color: #f8f9fa;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 1rem 0;
+            width: 100%;
+            text-align: center;
+            margin-top: auto;
+            transition: background-color 0.3s ease;
+        }
+
+        body.dark-mode footer {
+            background-color: #121212;
+        }
+
+        body.dark-mode #press {
+            background-color: rgb(163, 157, 157);
+            color: #121212;
+            box-shadow: 0px 4px 50px rgba(249, 247, 247, 0.2);
+        }
+        .button {
+    background-color: #3498db; /* Button color matching your code trend */
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 10px 0;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    margin-right: 10px; /* Adjusted margin for better spacing */
+}
+
+.button:hover {
+    background-color: #2980b9; /* Darker shade for hover effect */
+    transform: translateY(-2px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.button:active {
+    background-color: #1c6d9b; /* Even darker shade for active effect */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+}
+
+/* Adjustments for dark mode */
+body.dark-mode .button {
+    background-color: #4CAF50; /* Green background in dark mode */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Adjusted shadow for dark mode */
+}
+
+body.dark-mode .button:hover {
+    background-color: white; /* Light background on hover in dark mode */
+    color: black; /* Dark text on hover in dark mode */
+    border: 2px solid #4CAF50; /* Green border on hover in dark mode */
+}
+
+
+.inputquran {
+    background-color: #ffffff; /* Background color for input field */
+    color: #333333; /* Text color for input field */
+    border: 1px solid #cccccc; /* Border color for input field */
+    padding: 10px; /* Padding inside input field */
+    border-radius: 8px; /* Rounded corners */
+    width:100%;
+    transition: border-color 0.3s ease, color 0.3s ease; /* Transition effects */
+}
+
+.inputquran:focus {
+    border-color: #3498db; /* Border color on focus */
+    outline: none; /* Remove default focus outline *
+
+}
+
+      .KINGS {
+    color: #3498db; /* Blue color matching your theme */
+    font-size: 2rem; /* Adjust the font size as needed */
+    text-align: center; /* Center align the heading */
+    margin-top: 2rem; /* Add spacing from the top */
+    font-family: 'Pacifico', cursive; 
+} 
+/* Video grid styles */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.video-container {
+    position: relative;
+    overflow: hidden;
+    background: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.video-container iframe {
+    width: 100%;
+    height: 200px; /* Fixed height for video */
+    border: none;
+}
+
+.video-title {
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+}
+
+@media screen and (max-width: 768px) {
+    .video-grid {
+        grid-template-columns: 1fr; /* Single column layout on smaller screens */
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .video-container {
+        height: 150px; /* Adjust height for smaller screens */
+    }
+    .video-title {
+        font-size: 12px; /* Decrease font size for smaller screens */
+    }
+}
+.resetbutton{
+      background-color:rgba(94,117,139);
+            font-weight: bold;
+            margin-bottom: 6px;
+            height: 30px;
+            font-size: 15px;
+            width: 90px;
+            border-radius: 51px;
+            display: center;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            padding: 10px px;
+            position: grid;
+            color:rgb(248, 246, 246);
+           margin-bottom: 20px;
+}
+
+.allheader{
+ font-weight: bolder;
+ margin-bottom:18px;
+ margin-right:40px;
+ font-size: 30px;
+ 
+}
+.container { 
+      /* Add some top margin for better spacing */
+      margin-top: 50px; 
+      
+    }
+
+    .quote-display {
+      font-family: 'Amiri', serif;
+      font-size: 1.8rem;
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+      max-width: 100%; /* Add this line to make it responsive to the container */
+      overflow: hidden;         /* Hide any content that overflows */
+      text-overflow: ellipsis;    /* Add "..." to truncated text */
+     
+    }
+
+    .quote-display.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .btn-category, /* Apply to all buttons */
+    .btn-reveal {
+      background: linear-gradient(to right, #007bff, #28a745);
+      border: none;
+      box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .btn-category:hover,
+    .btn-reveal:hover {
+      box-shadow: 0 7px 14px rgba(50, 50, 93, .1), 0 3px 6px rgba(0, 0, 0, .08);
+    }
+
+    </style>
+</head>
+<body>
+    <nav>
+        <button id="tasbihBtn">TASBIH</button>
+        <button id="duaBtn">DUA</button>
+        <button id="quranBtn">QURAN</button>
+        <button id="videosBtn">SUPRISE</button>
+        <button id="dark-mode-toggle"></button>
+    </nav>
+
+    <section id="tasbihSection" class="active">
+       <h1 class="KINGS">Tasbih Counter</h1>
+       <div class="section-divider"></div>
+       
+        <button id="press">Press here</button>
+
+        <button class="resetbutton">reset</button>
+        <p id="counter-display">0</p>
+        <div id="notification"></div>
+        <div class="section-divider"></div>
+        <div id="achievement-display"></div>
+
+       
+    </section>
+
+    <section id="duaSection">
+        <h1 class="KINGS">DAILY DUA</h1>
+        <input type="text" id="duaSearchInput" placeholder="Search Duas..." class="inputquran">
+        <div id="searchResults"></div>
+        <div class="section-divider"></div>
+        <div>
+            <p class="dua"> سْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
+            <p class="tafsir">In the name of God, the Most Gracious, the Most Merciful</p>
+            <div class="section-divider"></div>
+        </div>
+    
+        <div>
+            <p class="dua"> AYATUL-KURSI</p>
+            <p class="dua">ٱللَّهُ لَآ إِلَـٰهَ إِلَّا هُوَ ٱلْحَىُّ ٱلْقَيُّومُ ۚ لَا تَأْخُذُهُۥ سِنَةٌۭ وَلَا نَوْمٌۭ ۚ لَّهُۥ مَا فِى ٱلسَّمَـٰوَٰتِ وَمَا فِى ٱلْأَرْضِ ۗ مَن ذَا ٱلَّذِى يَشْفَعُ عِندَهُۥٓ إِلَّا بِإِذْنِهِۦ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَىْءٍۢ مِّنْ عِلْمِهِۦٓ إِلَّا بِمَا شَآءَ ۚ وَسِعَ كُرْسِيُّهُ ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضَ ۖ وَلَا يَـُٔودُهُۥ حِفْظُهُمَا ۚ وَهُوَ ٱلْعَلِىُّ ٱلْعَظِيمُ</p>
+            <p class="tafsir">Allah! There is no god ˹worthy of worship˺ except Him, the Ever-Living, All-Sustaining. Neither drowsiness nor sleep overtakes Him. To Him belongs whatever is in the heavens and whatever is on the earth. Who could possibly intercede with Him without His permission? He ˹fully˺ knows what is ahead of them and what is behind them, but no one can grasp any of His knowledge—except what He wills ˹to reveal˺. His Seat encompasses the heavens and the earth, and the preservation of both does not tire Him. For He is the Most High, the Greatest.</p>
+            <div class="section-divider"></div>
+        </div>
+    
+        <div>
+            <p class="dua"> يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ  </p>
+            <p class="tafsir">O Changer of the hearts, make my heart firm upon Your religion</p>
+            <div class="section-divider"></div>
+        </div>
+    
+        <div>
+            <p class="dua">أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَمَّةٍ، وَمِنْ كُلِّ عَيْنٍ لَمَّةٍ"</p>
+            <p class="tafsir">O Allah! I seek Refuge with Your Perfect Words from every devil and from poisonous pests and from every evil, harmful things and envious eye.</p>
+            <div class="section-divider"></div>
+        </div>
+    
+        <div>
+            <p class="dua"> حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ</p>
+            <p class="tafsir">Sufficient for us is Allah, and [He is] the best Disposer of affairs.</p>
+            <div class="section-divider"></div>
+        </div>
+    
+        <div>
+            <p class="dua"> رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ الَّتِي أَنْعَمْتَ عَلَيَّ وَعَلَىٰ وَالِدَيَّ وَأَنْ أَعْمَلَ صَالِحًا تَرْضَاهُ وَأَدْخِلْنِي بِرَحْمَتِكَ فِي عِبَادِكَ الصَّالِحِينَ</p>
+            <p class="tafsir">My Lord, enable me to be grateful for Your favor which You have bestowed upon me and upon my parents and to do righteousness of which You approve. And admit me by Your mercy into [the ranks of] Your righteous servants. (Surah Naml Ayat 19)</p>
+            <div class="section-divider"></div>
+        </div>
+        <div>
+            <p class="dua">اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالآخِرَةِ</p>
+            <p class="tafsir">O Allah, I ask You for forgiveness and well-being in this world and in the Hereafter.</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua"> اللَّهُ اللَّهُ رَبِّي لاَ أُشْرِكُ بِهِ شَيْئًا </p>
+            <p class="tafsir">Allah is my Lord, I do not associate anything with Him</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">لَّآ إِلَٰهَ إِلَّآ أَنتَ سُبْحَٰنَكَ إِنِّى كُنتُ مِنَ ٱلظَّٰلِمِينَ</p>
+            <p class="tafsir"> There is no deity except You; exalted are You. Indeed, I have been of the wrongdoers.</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua"> مَا شَآءَ ٱللَّهُ لَا قُوَّةَ إِلَّا بِٱللَّها </p>
+            <p class="tafsir">There is no power except with Allah</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">لا حَوْلَ وَلا قُوَّةَ إِلا بِالل</p>
+            <p class="tafsir">There is no power and no strength except with Allah. </p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">لا إله إلا الله محمد رسول الله</p>
+            <p class="tafsir">there is no other God but Allah and Mohammad SAW is His prophet</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua"> سُبْحَانَ اللّهِ وَ بِحَمْدِهِ</p>
+            <p class="tafsir">Glory be to Allah and Praise Him</p>
+            <p>_____________________________</p>
+      </div> 
+      
+      <div>
+            <p class="dua">سُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ وَلاَ إِلَهَ إِلاَّ اللَّهُ وَاللَّهُ أَكْبَرُ وَلاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّ</p>
+            <p class="tafsir">Glory be to Allah, Praise be to Allah, There is no God but Allah, Allah is Great, There is no Support and No Power except in Allah</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">أشهد أن لا إله إلا الله وحده لا شريك له وأن محمداً عبده ورسوله</p>
+            <p class="tafsir">I bear witness that there is no deity besides God, who is without partner,and I bear witness that Muhammad is His servant and messenger."
+            </p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">لا إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَىْءٍ قَدِيرٌ"</p>
+            <p class="tafsir">There is no god but Allah, the One, having no partner with Him. Sovereignty belongs to Him and all the praise is due to Him, and He is Potent over everything</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ إِلَهًا وَاحِدًا أَحَدًا صَمَدًا لَمْ يَتَّخِذْ صَاحِبَةً وَلاَ وَلَدًا وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ</p>
+            <p class="tafsir">‘I bear witness that none has the right to be worshipped but Allah. Alone, without partner, One Deity, the One, As-Samad, He did not take a wife, nor a child, nor is there anyone like Him x10</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ</p>
+            <p class="tafsir">O Allah, I ask you for Afiyah</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">اللَّهُمَّ ارْحَمْ قَلْبِي</p>
+            <p class="tafsir">Oh Allah, fix my heart</p>
+            <p>_____________________________</p>
+      </div> 
+      
+      <div>
+            <p class="dua">اللَّهُمَّ اغْفِرْ لِي وَارْحَمْنِي وَاجْبُرْنِي وَاهْدِنِي وَارْزُقْنِي
+    
+            </p>
+            <p class="tafsir">“O Allah! Pardon me, have mercy on me, help me, guide me, and grant me sustenance</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">لهم اغفر لي، وارحمني، وعافني، وارزقني</p>
+            <p class="tafsir">(O Allah! Forgive me, have mercy on me, protect me and provide me with sustenance</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">اللَّهُمَّ أَكْثِرْ مَالِي وَوَلَدِي، وَبَارِكْ لِي فِيمَا أَعْطَيْتَنِي</p>
+            <p class="tafsir"> O Allah, increase my wealth and offspring, and bless me in what You have given me.</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">اللَّهُمَّ اغْفِرْ لِي، وَارْحَمْنِي، وَاهْدِنِي، وَاجْبُرْنِي، وَعَافِنِي، وَارْزُقْنِي، وَارْفَعْنِي</p>
+            <p class="tafsir">“Oh Allah forgive me, have mercy on me, guide me, strengthen and enrich me (وَاجْبُرْنِي), grant me health and protection, provide me with sustenance, and raise my rank.</p>
+            <p>_____________________________</p>
+      </div> 
+      
+      <div>
+            <p class="dua">اللَّهُمَّ إنِّي أَسْأَلُك مِنْ فَضْلِكَ وَرَحْمَتِكَ، فَإِنَّهُ لاَ يَمْلِكُهَا إِلاَّ أَنْتَ</p>
+            <p class="tafsir">O Allaah indeed I ask of You for Your Virtue (Bounty) and Your Mercy, for indeed, no one possesses these except You.</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">"اللَّهُمَّ اغْفِرْ لِي ذَنْبِي، وَوَسِّعْ لِي فِي دَارِي، وَبَارِكْ لِي فِي رِزْقِي</p>
+            <p class="tafsir">O Allah! Forgive my sins and widen my home and grant barakah in my rizq</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">ya allah let my death only reach me when you have forgiven my sins and your pleased with me </p>
+            <p class="tafsir">personal</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">لَا إِلَهَ إِلَّا اللَّهُ وَاللَّهُ أَكْبَرُ وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ</p>
+            <p class="tafsir">There is no god but Allah, and Allah is the Greatest, and there is no power nor strength save with Allah.</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">ٱللَّٰهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَىٰ إِبْرَاهِيمَ وَعَلَىٰ آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ ٱللَّٰهُمَّ بَارِكْ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَىٰ إِبْرَاهِيمَ وَعَلَىٰ آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ
+            </p>
+            <p class="tafsir">O Allah, send your grace, honour and mercy upon Muhammad and upon the family of Muhammad, as You sent Your grace, honour and mercy upon Ibrahim, You are indeed Praiseworthy, Most Glorious. O Allah, send Your blessings upon Muhammad and the family of Muhammad, as You sent Your blessings upon Ibrahim, You are indeed Praiseworthy, Most Glorious”</p>
+            <p>_____________________________</p>
+      </div> 
+     
+      <div>
+            <p class="dua">سُبْحـانَ اللهِ وَبِحَمْـدِهِ عَدَدَ خَلْـقِه ، وَرِضـا نَفْسِـه ، وَزِنَـةَ عَـرْشِـه ، وَمِـدادَ كَلِمـاتِـه</p>
+            <p class="tafsir">Glory is to Allaah and praise is to Him, by the multitude of his creation, by His Pleasure, by the weight of His Throne, and by the extent of His Words (Recite 3 times in Arabic)</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">للَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ وَالْعَجْزِ وَالْكَسَلِ وَالْبُخْلِ وَالْجُبْنِ وَغَلَبَةِ الرِّجَالِ </p>
+            <p class="tafsir">(O Allah, I seek refuge with You from worry, grief, incapacity, laziness, miserliness, cowardice and being overpowered by (other) men.)</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">
+                اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ خَلَقْتَنِي وَأَنَا عَبْدُكَ وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ أَبُوءُ لَكَ بِذَنْبِي وَأَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ
+                
+              </p>
+            <p class="tafsir">O Allaah You are my Lord, there is none worthy of worship in truth except You, You created me and I am Your slave and I am abiding to Your covenant and promise as best as I can, I seek refuge in You from the evil that I have committed, I profess to you my sins and I acknowledge Your favour upon me, so forgive me verily no one forgives sins except you.</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ</p>
+            <p class="tafsir"> In the Name of Allah with Whose Name there is protection against every kind of harm in the earth or in the heaven, and he is the All-Hearing and All-Knowning x3 morn and even</p>
+            <p>_____________________________</p>
+      </div> 
+      
+      <div>
+            <p class="dua">لَّآ إِلَٰهَ إِلَّآ أَنتَ سُبْحَٰنَكَ إِنِّى كُنتُ مِنَ ٱلظَّٰلِمِينَ
+    </p>
+            <p class="tafsir">There is no deity except You; exalted are You. Indeed, I have been of the wrongdoers.</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">لا حَوْلَ وَلا قُوَّةَ إِلا بِالله</p>
+            <p class="tafsir">there is no power and no strength except with Allah</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">why are you worried about the future when allah is the best of planners</p>
+            <p class="tafsir">question?</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">اللَّهُمَّ لا سَهْلَ إِلاَّ مَا جَعَلْتَهُ سَهْلاً، وَأَنْتَ تَجْعَلُ الْحَزْنَ إِذَا شِئْتَ سَهْلاً"</p>
+            <p class="tafsir">Oh Allah! Nothing is easy except what you have made easy. If you wish, you can make the difficult easy.</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ</p>
+            <p class="tafsir">O Living, O Self-Sustaining Sustainer! In Your Mercy do I seek relief</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">
+                اللَّهُمَّ رَحْمَتَكَ أَرْجُو فَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ وَأَصْلِحْ لِي شَأْنِي كُلَّهُ لَا إِلَهَ إِلَا أَنْتَ
+                </p>
+            <p class="tafsir">“O Allah, I hope for Your mercy. Do not leave me to myself even for a blink of an eye. Correct all of my affairs for me. There is none worthy of worship except You.”</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">
+                اللَّهُمَّ اكْفِنِي بِحَلاَلِكَ عَنْ حَرَامِكَ وَأَغْنِنِي بِفَضْلِكَ عَمَّنْ سِوَاكَ
+                </p>
+            <p class="tafsir">O Allah! Grant me enough of what You make lawful so that I may dispense with what You make unlawful, and enable me by Your Grace to dispense with all but You.”
+    </p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua"> اللَّهُمَ حَبَّبْ إِلَيْنَا الْإِيمَانَ وَزَيِّنْهُ فِي قُلُوبِنَا، وَكَرِّهْ إِلَيْنَا الْكُفْرَ وَالْفُسُوقَ وَالْعِصْيَانَ، وَاجْعَلْنَا مِنَ الرَّاشِدِينَ
+    </p>
+            <p class="tafsir">O Allah make our faith beloved to us and beautify it in our hearts and make hateful to us disbelief, wickedness and disobedience. And make us of the rightly guided.</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">اللَّهُمَّ إِنِّي أَسْأَلُكَ حُسْنَ الْخَاتِمَةِ</p>
+            <p class="tafsir">good ending </p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">اللَّهُمَّ ارْزُقْنِيْ تَوْبَتًا نَصُوْحَا قَبْلَ الْمَوْت</p>
+            <p class="tafsir">"O Allah, grant me sincere repentance before death."</p>
+            <p>_____________________________</p>
+      </div> 
+      
+      <div>
+            <p class="dua">حَسْبِيَ اللَّهُ لاَ إِلَهَ إِلاَّ هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ
+            </p>
+            <p class="tafsir">Allah is sufficient for me. There is none worthy of worship but Him. I have placed my trust in Him. He is the Lord of the Majestic throne.”x7 morning and before sleeping</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">بِاسْمِكَ رَبِّي وَضَعْتُ جَنْبِي، وَبِكَ أَرْفَعُهُ، إِنْ أَمْسَكْتَ نَفْسِي فَاغْفِرْ لَهَا، وَإِنْ أَرْسَلْتَهَا فَاحْفَظْهَا بِمَا تَحْفَظُ بِهِ عِبَادَكَ الصَّالِحِينَ</p>
+            <p class="tafsir"> With Your Name my Lord, I lay myself down and with Your Name I rise. And if my soul You take, forive it, and if You send it back then protect it. as You protection Your righteous slaves.</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">رَبِّ إِنِّى لِمَآ أَنزَلْتَ إِلَىَّ مِنْ خَيْرٍۢ فَقِيرٌۭ</p>
+            <p class="tafsir">My Lord, indeed I am, for whatever good You would send down to me, in need.”</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">ربِّ زِدْنِي عِلْماً</p>
+            <p class="tafsir">My Lord, increase me in knowledge.</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">Allahumma Inni As’aluka Al Jannah</p>
+            <p class="tafsir">O Allah, I ask You for Paradise</p>
+            <p>_____________________________</p>
+      </div> 
+     
+      <div>
+            <p class="dua">اللهم قني عذابك يوم تبعث عبادك</p>
+            <p class="tafsir">(O Allah! Guard me against Your punishment on the Day when You will resurrect Your slaves)."
+            </p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">رَبَّنَا آتِنَا مِن لَّدُنكَ رَحْمَةً وَهَيِّئْ لَنَا مِنْ أَمْرِنَ</p>
+            <p class="tafsir"> Our Lord, grant us from Yourself mercy and prepare for us from our affair right guidance.</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا
+    
+            </p>
+            <p class="tafsir">“Our Lord! Grant unto us wives and offspring who will be the comfort of our eyes, and give us (the grace) to lead the righteous.”</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">اللَّهُمَّ انْفَعْنِي بِمَا عَلَّمْتَنِي وَعَلِّمْنِي مَا يَنْفَعُنِي وَزِدْنِي عِلْمًا وَالْحَمْدُ لِلَّهِ عَلَى كُلِّ حَالٍ </p>
+            <p class="tafsir">O Allah, benefit me by that which You have taught me, and teach me that which will benefit me, and increase my knowledge. Praise is to Allah in all circumstances].</p>
+            <p>_____________________________</p>
+      </div> 
+      
+      <div>
+            <p class="dua">أَنتَ وَلِيِّي فِي الدُّنُيَا وَالآخِرَةِ تَوَفَّنِي مُسْلِمًا وَأَلْحِقْنِي بِالصَّالِحِينَ
+            </p>
+            <p class="tafsir">“You are my Wali (Protector, Helper, Supporter, Guardian, etc.) in this world and in the Hereafter, cause me to die as a Muslim (the one submitting to Your Will), and join me with the righteous.” (Yusuf, 12: 101)</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">فَإِنَّ مَعَ ٱلْعُسْرِ يُسْرًا</p>
+            <p class="tafsir">
+                [not dua]So, surely with hardship comes ease.</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">اللَّهُمَّ أَجِرْنِي مِنَ النَّارِ</p>
+            <p class="tafsir">“O Allah, protect me from Hell x3</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua"> يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ </p>
+            <p class="tafsir">O Changer of the hearts, make my heart firm upon Your religion</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإنْ لَمْ تَغْفِرْلَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الخَاسِرِينَ</p>
+            <p class="tafsir">Our Lord! We have wronged ourselves. If You do not forgive us and have mercy on us, we will certainly be lost.
+    
+                (Surah Al-A’raf, 7:23)</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">اللَّهُمَّ اغْفِرْ لِي مَا قَدَّمْتُ وَمَا أَخَّرْتُ، وَمَا أَسْرَرْتُ وَمَا أَعْلَنْتُ وَمَا أَنْتَ أَعْلَمُ بِهِ مِنِّي، أَنْتَ المُقَدِّمُ وَأَنْتَ المُؤَخِّرُ وَأَنْتَ عَلَى كُلِّ شَيْءٍ قَدِير
+            </p>
+            <p class="tafsir">O Allah! Forgive me for those sins which I committed in the past and that which I may commit in the future, the sins that I have committed in privacy or in public and all the sins of which You are better aware of it than I am of myself. You are The One who bring forward and reprieve as You wish and indeed You are over all things capable.</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">اَللَّهُمَّ اِنْفَعْنِي بِمَا عَلَّمْتَنِي, وَعَلِّمْنِي مَا يَنْفَعُنِي, وَارْزُقْنِي عِلْمًا يَنْفَعُنِي</p>
+            <p class="tafsir">“O Allah! Grant me benefit in what you have taught me, and teach me useful knowledge and provide me with knowledge that will benefit me.”</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">رَبِّ اجْعَلْنِي مُقِيمَ الصَّلاَةِ وَمِن ذُرِّيَّتِي رَبَّنَا وَتَقَبَّلْ دُعَاءِ رَبَّنَا اغْفِرْ لِي وَلِوَالِدَيَّ وَلِلْمُؤْمِنِينَ يَوْمَ يَقُومُ الْحِسَابُ
+            </p>
+            <p class="tafsir">“My Lord, make me an establisher of prayer, and from my descendants. Our Lord, and accept my supplication. Our Lord, forgive me and my parents and the believers the Day the account is established.”</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">اَللَّهُمَّ كَمَا أَحْسَنْتَ خَلْقِي, فَحَسِّنْ خُلُقِي</p>
+            <p class="tafsir">“O Allah You have made my creation perfect, so make my moral characteristics also the best.”</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">اللَّهُمَّ اجْعَلْ فِي قَلْبِي نُورًا وَفِي سَمْعِي نُورًا وَفِي بَصَرِي نُورًا وَعَنْ يَمِينِي نُورًا وَعَنْ شِمَالِي نُورًا وَأَمَامِي نُورًا وَخَلْفِي نُورًا وَفَوْقِي نُورًا وَتَحْتِي نُورًا وَاجْعَلْ لِي نُورًا
+            </p>
+            <p class="tafsir">“O Allah! place light in my heart, light in my hearing, light in my sight, light on my right, light on my left, light in front of me, light behind me, light above me, light below me, make light for me.”</p>
+            <p>_____________________________</p>
+      </div> 
+      
+      <div>
+            <p class="dua">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ</p>
+            <p class="tafsir">Our Lord, give us in this world good and in the Hereafter good and protect us from the punishment of the Fire</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">اَللَّهُمَّ إِنِّي أَسْأَلُكَ اَلْعَافِيَةَ فِي دِينِي, وَدُنْيَايَ, وَأَهْلِي, وَمَالِي, اَللَّهُمَّ اسْتُرْ عَوْرَاتِي, وَآمِنْ رَوْعَاتِي, وَاحْفَظْنِي مِنْ بَيْنِ يَدَيَّ, وَمِنْ خَلْفِي, وَعَنْ يَمِينِي, وَعَنْ شِمَالِي, وَمِنْ فَوْقِي, وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي
+            </p>
+            <p class="tafsir">“O Allah! I ask you for pardon and well-being in my religious and worldly affairs, and my family and my wealth. O Allah! Cover my weaknesses and set at ease my dismay. O Allah! Preserve me from the front and from behind and on my right and on my left and from above, and I seek refuge with you lest I be swallowed up by the earth.”</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">اللَّهُمَّ اجْعَلْ مَعَ الْبَرَكَةِ بَرَكَتَيْنِ</p>
+            <p class="tafsir">“O Allah, shower with its blessings two other blessings (multiply blessings showered upon it).</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">اللَّهُمَّ إِنِّي أَسْأَلُكَ الثَّبَاتَ فِي الأَمْرِ وَالْعَزِيمَةِ عَلَى الرُّشْدِ وَأَسْأَلُكَ شُكْرَ نِعْمَتِكَ وَحُسْنَ عِبَادَتِكَ وَأَسْأَلُكَ قَلْبًا سَلِيمًا وَلِسَانًا صَادِقًا وَأَسْأَلُكَ مِنْ خَيْرِ مَا تَعْلَمُ وَأَعُوذُ بِكَ مِنْ شَرِّ مَا تَعْلَمُ وَأَسْتَغْفِرُكَ لِمَا تَعْلَ</p>
+            <p class="tafsir">“O Allah, I ask You for steadfastness in all my affairs and determination in following the right path, I ask You to make me thankful for Your blessings and to make me worship You properly. I ask You for a sound heart and a truthful tongue. I ask You for the best of what You know and I seek refuge in You from the worst of what You know and I seek Your forgiveness for what You know.”</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عِلْمٍ لاَ يَنْفَعُ وَقَلْبٍ لاَ يَخْشَعُ وَدُعَاءٍ لاَ يُسْمَعُ وَنَفْسٍ لاَ تَشْبَعُ  ثُمَّ يَقُولُ  اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ هَؤُلاَءِ الأَرْبَعِ </p>
+            <p class="tafsir">O Allah, I seek refuge with You from knowledge that is of no benefit, a heart that is not humble, a supplication that is not heard and a soul that is not satisfied.)</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">Allahumma inni as'aluka al-jannah wa a'oodhu bika min an-nar</p>
+            <p class="tafsir">sO Allah, I ask You for Paradise, and I seek refuge in You from the Fire. </p>
+            <p>_____________________________</p>
+      </div> 
+      
+       <div>
+            <p class="dua">O' Allah forgive every dead person who finds no one to pray for them</p>
+            <p class="tafsir">personal</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">Allahumma-ja’lni khayran mima yadhunoon wa-ghfir li ma la ya’lamoon wa la tu’akhidhni bi ma yaquloon.
+            </p>
+            <p class="tafsir">O Allah, make me better than what they think of me, and forgive me for what they do not know about me, and do not take me to account for what they say about me.</p>
+            <p>_____________________________</p>
+      </div> 
+      <div>
+            <p class="dua">ikhlas x3 , falaq x3, naasx3</p>
+            <p class="tafsir">protection </p>
+           
+            <p>_____________________________</p>
+            <p>END OF DUA </p>
+      </div> 
+    </section>
+
+    <section id="quranSection">
+        <DIV>
+            <H1 CLASS="allheader">QURAN SECTION</H1>
+            <input type="text" id="searchInput" placeholder="Search for a Surah..." class="inputquran">
+            <div id="surahList"></div>
+        </Div>
+        </section>
+
+ <body class="flex flex-col items-center justify-center min-h-screen px-4">
+    <section id="videosSection" class="w-full">
+        <div class="container mx-auto max-w-5xl text-center py-12 px-6 bg-white rounded-lg shadow-lg">
+            <h1 class="text-4xl font-bold text-gray-800 mb-10">Seek Guidance</h1>
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <button id="btn-anxious" class="btn-category">Anxious</button>
+                <button id="btn-charity" class="btn-category">Charity</button>
+                <button id="btn-rizq" class="btn-category">Rizq</button>
+                <button id="btn-sad" class="btn-category">Sad</button>
+                <button id="btn-lonely" class="btn-category">Lonely</button>
+                <button id="btn-sinner" class="btn-category">Sinner</button>
+                <button id="btn-stressed" class="btn-category">Stressed</button>
+                <button id="btn-lost" class="btn-category">Lost</button>
+                <button id="btn-hopeless" class="btn-category">Hopeless</button>
+                <button id="btn-grateful" class="btn-category">Grateful</button>
+                <button id="btn-content" class="btn-category">Content</button>
+                <button id="btn-motivated" class="btn-category">Motivated</button>
+            </div>
+            <div id="quote-display" class="quote-display text-2xl font-semibold text-gray-800 italic mt-8"></div>
+        </div>
+       
+
+</section>
+   
+
+    <footer>
+
+    </footer>
+
+    <script>
+        const tasbihSection = document.getElementById('tasbihSection');
+        const duaSection = document.getElementById('duaSection');
+        const quranSection = document.getElementById('quranSection');
+        const videosSection = document.getElementById('videosSection');
+        const tasbihBtn = document.getElementById('tasbihBtn');
+        const duaBtn = document.getElementById('duaBtn');
+        const quranBtn = document.getElementById('quranBtn');
+        const videosBtn = document.getElementById('videosBtn');
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const body = document.body;
+        const pressButton = document.getElementById('press');
+        const counterDisplay = document.getElementById('counter-display');
+        let count = 0;
+
+        tasbihBtn.addEventListener('click', () => {
+            showSection(tasbihSection);
+        });
+
+        duaBtn.addEventListener('click', () => {
+            showSection(duaSection);
+        });
+
+        quranBtn.addEventListener('click', () => {
+            showSection(quranSection);
+        });
+
+        videosBtn.addEventListener('click', () => {
+            showSection(videosSection);
+        });
+
+        function showSection(section) {
+            const sections = [tasbihSection, duaSection, quranSection, videosSection];
+            sections.forEach(s => {
+                s.classList.remove('active');
+            });
+            section.classList.add('active');
+            window.scrollTo(0, section.offsetTop);
+        }
+
+
+       
+
+
+        pressButton.addEventListener('click', () => {
+            count++;
+            counterDisplay.textContent = count;
+
+        });
+
+
+        // JavaScript code goes here
+        // Get the input field and list
+        const input = document.getElementById('searchInput');
+        const list = document.getElementById('surahList');
+
+        // Original list of Surahs
+        const surahs = [
+    { number: 1, name: "Suratul Fatiha" },
+    { number: 2, name: "Suratul Baqarah" },
+    { number: 3, name: "Suratul Imran" },
+    { number: 4, name: "Suratul Nisa" },
+    { number: 5, name: "Suratul Maidah" },
+    { number: 6, name: "Suratul An'am" },
+    { number: 7, name: "Suratul A'raf" },
+    { number: 8, name: "Suratul Anfal" },
+    { number: 9, name: "Suratul Tawbah" },
+    { number: 10, name: "Suratul Yunus" },
+    { number: 11, name: "Suratul Hud" },
+    { number: 12, name: "Suratul Yusuf" },
+    { number: 13, name: "Suratul Ra'd" },
+    { number: 14, name: "Suratul Ibrahim" },
+    { number: 15, name: "Suratul Hijr" },
+    { number: 16, name: "Suratul Nahl" },
+    { number: 17, name: "Suratul Isra" },
+    { number: 18, name: "Suratul Kahf" },
+    { number: 19, name: "Suratul Maryam" },
+    { number: 20, name: "Suratul Ta-Ha" },
+    { number: 21, name: "Suratul Anbiya" },
+    { number: 22, name: "Suratul Al-Hajj" },
+    { number: 23, name: "Suratul Al-Mu'minun" },
+    { number: 24, name: "Suratul An-Nur" },
+    { number: 25, name: "Suratul Al-Furqan" },
+    { number: 26, name: "Suratul Ash-Shu'ara" },
+    { number: 27, name: "Suratul An-Naml" },
+    { number: 28, name: "Suratul Al-Qasas" },
+    { number: 29, name: "Suratul Al-Ankabut" },
+    { number: 30, name: "Suratul Ar-Rum" },
+    { number: 31, name: "Suratul Luqman" },
+    { number: 32, name: "Surat As-Sajda" },
+    { number: 33, name: "Suratul Ahzab" },
+    { number: 34, name: "Surat Saba" },
+    { number: 35, name: "Surat Fatir" },
+    { number: 36, name: "Surat Ya-Sin" },
+    { number: 37, name: "Surat As-Saffat" },
+    { number: 38, name: "Surat Sad" },
+    { number: 39, name: "Surat Az-Zumar" },
+    { number: 40, name: "Surat Ghafir" },
+    { number: 41, name: "Surat Fussilat" },
+    { number: 42, name: "Surat Ash-Shura" },
+    { number: 43, name: "Surat Az-Zukhruf" },
+    { number: 44, name: "Surat Ad-Dukhan" },
+    { number: 45, name: "Surat Al-Jathiyah" },
+    { number: 46, name: "Suratul Ahqaf" },
+    { number: 47, name: "Surat Muhammad" },
+    { number: 48, name: "Suratul Fath" },
+    { number: 49, name: "Suratul Hujurat" },
+    { number: 50, name: "Surat Qaf" },
+    { number: 51, name: "Surat Adh-Dhariyat" },
+    { number: 52, name: "Surat At-Tur" },
+    { number: 53, name: "Surat An-Najm" },
+    { number: 54, name: "Surat Al-Qamar" },
+    { number: 55, name: "Surat Ar-Rahman" },
+    { number: 56, name: "Surat Al-Waqi'ah" },
+    { number: 57, name: "Surat Al-Hadid" },
+    { number: 58, name: "Surat Al-Mujadila" },
+    { number: 59, name: "Surat Al-Hashr" },
+    { number: 60, name: "Surat Al-Mumtahanah" },
+    { number: 61, name: "Surat As-Saff" },
+    { number: 62, name: "Surat Al-Jumu'ah" },
+    { number: 63, name: "Surat Al-Munafiqun" },
+    { number: 64, name: "Surat At-Taghabun" },
+    { number: 65, name: "Surat At-Talaq" },
+    { number: 66, name: "Surat At-Tahrim" },
+    { number: 67, name: "Surat Al-Mulk" },
+    { number: 68, name: "Surat Al-Qalam" },
+    { number: 69, name: "Surat Al-Haaqqa" },
+    { number: 70, name: "Surat Al-Ma'arij" },
+    { number: 71, name: "Surat Nuh" },
+    { number: 72, name: "Surat Al-Jinn" },
+    { number: 73, name: "Surat Al-Muzzammil" },
+    { number: 74, name: "Surat Al-Muddaththir" },
+    { number: 75, name: "Surat Al-Qiyamah" },
+    { number: 76, name: "Surat Al-Insan" },
+    { number: 77, name: "Surat Al-Mursalat" },
+    { number: 78, name: "Surat An-Naba" },
+    { number: 79, name: "Surat An-Nazi'at" },
+    { number: 80, name: "Surat Abasa" },
+    { number: 81, name: "Surat At-Takwir" },
+    { number: 82, name: "Surat Al-Infitar" },
+    { number: 83, name: "Surat Al-Mutaffifin" },
+    { number: 84, name: "Surat Al-Inshiqaq" },
+    { number: 85, name: "Surat Al-Buruj" },
+    { number: 86, name: "Surat At-Tariq" },
+    { number: 87, name: "Surat Al-A'la" },
+    { number: 88, name: "Surat Al-Ghashiyah" },
+    { number: 89, name: "Surat Al-Fajr" },
+    { number: 90, name: "Surat Al-Balad" },
+    { number: 91, name: "Surat Ash-Shams" },
+    { number: 92, name: "Surat Al-Layl" },
+    { number: 93, name: "Surat Ad-Duha" },
+    { number: 94, name: "Surat Ash-Sharh" },
+    { number: 95, name: "Surat At-Tin" },
+    { number: 96, name: "Surat Al-Alaq" },
+    { number: 97, name: "Surat Al-Qadr" },
+    { number: 98, name: "Surat Al-Bayyinah" },
+    { number: 99, name: "Surat Az-Zalzalah" },
+    { number: 100, name: "Surat Al-Adiyat" },
+    { number: 101, name: "Surat Al-Qari'ah" },
+    { number: 102, name: "Surat At-Takathur" },
+    { number: 103, name: "Surat Al-Asr" },
+    { number: 104, name: "Surat Al-Humazah" },
+    { number: 105, name: "Surat Al-Fil" },
+    { number: 106, name: "Surat Quraysh" },
+    { number: 107, name: "Surat Al-Ma'un" },
+    { number: 108, name: "Surat Al-Kawthar" },
+    { number: 109, name: "Surat Al-Kafirun" },
+    { number: 110, name: "Surat An-Nasr" },
+    { number: 111, name: "Surat Al-Masad" },
+    { number: 112, name: "Surat Al-Ikhlas" },
+    { number: 113, name: "Surat Al-Falaq" },
+    { number: 114, name: "Surat An-Nas" },
+    
+
+
+            // Add more Surah objects as needed
+        ];
+
+        // Function to generate Surah list items
+        function generateSurahList() {
+            // Clear existing list items
+            list.innerHTML = '';
+
+            // Loop through surahs array and create list items
+            surahs.forEach(function(surah) {
+                const a = document.createElement('a');
+                a.href = `https://quran.com/${surah.number}`;
+                a.className = 'button';
+                a.target = '_blank';
+                a.textContent = surah.name;
+                list.appendChild(a);
+            });
+        }
+
+        // Call function to generate initial Surah list
+        generateSurahList();
+
+        // Event listener for input field changes
+        input.addEventListener('input', function() {
+            const searchValue = input.value.toLowerCase();
+            const items = list.getElementsByTagName('a');
+
+            // Loop through all list items, hide or show based on search query
+            Array.from(items).forEach(function(item) {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(searchValue)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });  
+        // Function to search through duas
+function searchDuas() {
+    // Get input value
+    var input = document.getElementById('duaSearchInput').value.toLowerCase();
+    // Get all dua containers
+    var duas = document.querySelectorAll('#duaSection .dua');
+
+    // Loop through each dua and check if it matches the search input
+    var results = [];
+    duas.forEach(function(dua) {
+        var text = dua.textContent.toLowerCase();
+        if (text.includes(input)) {
+            results.push(dua.outerHTML); // Store HTML of matching dua
+        }
+    });
+
+    // Display search results
+    var searchResults = document.getElementById('searchResults');
+    if (results.length > 0) {
+        searchResults.innerHTML = results.join('');
+    } else {
+        searchResults.innerHTML = '<p>No results found</p>';
+    }
+}
+
+// Event listener for input changes
+document.getElementById('duaSearchInput').addEventListener('input', searchDuas);
+
+const quotesSad = [
+ "Verily, with every hardship there is relief.", // Quran 94:6
+  "And Allah loves the patient.", // Quran 3:146
+  "And give good tidings to the patient, who, when disaster strikes them, say, 'Indeed we belong to Allah, and indeed to Him we will return.'", // Quran 2:155-156
+  "So remember Me; I will remember you. And be grateful to Me and do not deny Me.", // Quran 2:152
+  "And seek help through patience and prayer, and indeed, it is difficult except for the humbly submissive [to Allah ].",  // Quran 2:45
+  "And We will surely test you with something of fear and hunger and a loss of wealth and lives and fruits, but give good tidings to the patient", // Quran 2:155
+  "Who, when disaster strikes them, say, 'Indeed we belong to Allah , and indeed to Him we will return.'", // Quran 2:156
+  "Those are the ones upon whom are blessings from their Lord and mercy. And it is those who are the [rightly] guided." , // Quran 2:157 
+  "Do not despair of the Mercy of Allah.",  // Quran 39:53
+  "And your Lord says, \"Call upon Me; I will respond to you.\"", //Quran 40:60
+];
+
+const quotesLonely = [
+ "And He is with you wherever you are.", // Quran 57:4
+  "Your Lord has not taken leave of you, [O Muhammad], nor has He detested [you].", // Quran 93:3
+  "So remember Me; I will remember you.", // Quran 2:152
+  "And be patient, for indeed, Allah is with the patient.", // Quran 8:46
+  "Unquestionably, by the remembrance of Allah hearts are assured.", // Quran 13:28
+  "And We have already created man and know what his soul whispers to him, and We are closer to him than [his] jugular vein", // Quran 50:16 
+  "Is He [not best] who responds to the desperate one when he calls upon Him and removes evil and makes you inheritors of the earth? Is there a deity with Allah ? Little do you remember.",  // Quran 27:62
+  "And when My servants ask you, [O Muhammad], concerning Me - indeed I am near. I respond to the invocation of the supplicant when he calls upon Me. So let them respond to Me [by obedience] and believe in Me that they may be [rightly] guided.", // Quran 2:186
+  "And your Lord says, \"Call upon Me; I will respond to you.", //Quran 40:60
+  "Indeed, those who have said, \"Our Lord is Allah \" and then remained on a right course - the angels will descend upon them, [saying], \"Fear not, nor grieve but receive good tidings of Paradise, which you were promised.", // Quran 41:30
+
+];
+
+const quotesSinner = [
+  "Say, \"O My servants who have transgressed against themselves [by sinning], do not despair of the mercy of Allah . Indeed, Allah forgives all sins. Indeed, it is He who is the Forgiving, the Merciful.\"", // Quran 39:53
+  "And turn to your Lord in repentance and submit to Him before the punishment comes upon you; then you will not be helped.", // Quran 39:54
+  "Do not lose hope, nor be sad.", // Quran 3:139
+  "And whoever fears Allah - He will make for him a way out.", // Quran 65:2
+  "Indeed, Allah loves those who are constantly repentant and loves those who purify themselves.", // Quran 2:222
+  "Except for those who repent, believe and do righteous work. For them Allah will replace their evil deeds with good. And ever is Allah Forgiving and Merciful.", // Quran 25:70
+  "O My servants who have transgressed against themselves by exceeding the limits [in sin], do not despair of the mercy of Allah . Indeed, Allah forgives all sins. Indeed, it is He who is the Forgiving, the Merciful.", // Quran 39:53
+  "And those who, when they commit an immorality or wrong themselves [by transgression], remember Allah and seek forgiveness for their sins - and who can forgive sins except Allah ? - and [who] do not persist in what they have done while they know.", // Quran 3:135
+  "Indeed, no one despairs of relief from Allah except the disbelieving people.", // Quran 12:87 
+  "And He is with you wherever you are.", // Quran 57:4 
+];
+
+const quotesAnxious = [
+"And whoever fears Allah - He will make for him of his affair ease.", // Quran 65:4
+  "So do not weaken and do not grieve, and you will be superior if you are [true] believers.", // Quran 3:139
+  "And We will surely test you with something of fear and hunger and a loss of wealth and lives and fruits, but give good tidings to the patient", // Quran 2:155
+  "And when you have decided, then rely upon Allah. Indeed, Allah loves those who rely upon Him.", // Quran 3:159
+  "Those who have believed and whose hearts are assured by the remembrance of Allah. Unquestionably, by the remembrance of Allah hearts are assured.", // Quran 13:28 
+  "And We will surely test you until We make evident those who strive among you [for the cause of Allah ] and the patient, and We will test your affairs.", // Quran 47:31
+  "Do they not know that Allah , when He grasps a people [for their deeds], there is no one to repel Him, and He is not asked, 'For what have You seized [them]?'", // Quran 22:40 
+  "That is because Allah would not change a favor which He had bestowed upon a people until they change what is within themselves. And indeed, Allah is Hearing and Knowing.", // Quran 8:53
+  "It is He who shows you lightning, [causing] from it fear and aspiration. And He produces the heavy clouds.", // Quran 13:12
+  "And to Allah belongs the dominion of the heavens and the earth; and to Allah is the destination." // Quran 3:189
+
+  
+ 
+  
+];
+
+const quotesStressed = [
+"Verily, after hardship comes ease.", // Quran 94:6
+  "Allah does not burden a soul beyond that it can bear.", // Quran 2:286 
+  "And seek help through patience and prayer, and indeed, it is difficult except for the humbly submissive [to Allah ].",  // Quran 2:45
+  "And We will surely test you with something of fear and hunger and a loss of wealth and lives and fruits, but give good tidings to the patient,", // Quran 2:155
+  "Who, when disaster strikes them, say, 'Indeed we belong to Allah, and indeed to Him we will return.'", // Quran 2:156
+  "Those are the ones upon whom are blessings from their Lord and mercy. And it is those who are the [rightly] guided.", // Quran 2:157 
+  "And rely upon the Ever-Living who does not die, and exalt [ Allah ] with His praise. And sufficient is He to be, with the sins of His servants, Acquainted", // Quran 25:58
+  "And He is with you wherever you are.", // Quran 57:4
+  "And whoever relies upon Allah - then He is sufficient for him.", // Quran 65:3
+  "So remember Me; I will remember you. And be grateful to Me and do not deny Me." // Quran 2:152
+];
+
+const quotesLost = [
+  // Add quotes related to feeling lost
+  "And your Lord says, “Call upon Me; I will respond to you.”", // Quran 40:60
+  "And hold firmly to the rope of Allah all together and do not become divided. And remember the favor of Allah upon you - when you were enemies and He brought your hearts together and you became, by His favor, brothers.", // Quran 3:103
+  "It is He who has sent down upon you, [O Muhammad], the Book in truth, confirming what was before it. And He revealed the Torah and the Gospel.",  // Quran 3:3
+  "And We have certainly created man and know what his soul whispers to him, and We are closer to him than [his] jugular vein.", // Quran 50:16
+  "Indeed, my prayer, my rites of sacrifice, my living and my dying are for Allah, Lord of the worlds.", // Quran 6:162 
+  "No partner has He. And this I have been commanded, and I am the first [among you] of the Muslims.\"", // Quran 6:163
+  "And whoever is guided - it is only for [the benefit of] his soul. And whoever errs - it is only to its detriment. And no bearer of burdens will bear the burden of another.", // Quran 6:164
+  "And never will Allah leave the believers in that [state] you are in [presently] until He separates the evil from the good.", // Quran 3:179
+  "O mankind, indeed We have created you from male and female and made you peoples and tribes that you may know one another. Indeed, the most noble of you in the sight of Allah is the most righteous of you. Indeed, Allah is Knowing and Acquainted.", // Quran 49:13
+  "And whoever relies upon Allah - then He is sufficient for him." // Quran 65:3 
+
+ 
+];
+
+const quotesHopeless = [
+  // Add quotes related to feeling hopeless
+  "Do not lose hope, nor be sad. Indeed, you will be victorious if you are true believers.", // Quran 3:139 
+  "And give good tidings to the patient, Who, when disaster strikes them, say, 'Indeed we belong to Allah, and indeed to Him we will return.'", // Quran 2:155-156
+  "And never give up hope of Allah's Mercy. Certainly no one despairs of Allah's Mercy, except the people who disbelieve.", // Quran 12:87
+  "So do not weaken and do not grieve, and you will be superior if you are [true] believers.", // Quran 3:139
+  "And whoever fears Allah - He will make for him a way out And will provide for him from where he does not expect. And whoever relies upon Allah - then He is sufficient for him.", // Quran 65:2-3
+  "O My servants who have transgressed against themselves [by sinning], do not despair of the mercy of Allah . Indeed, Allah forgives all sins. Indeed, it is He who is the Forgiving, the Merciful.", // Quran 39:53
+  "Indeed, no one despairs of relief from Allah except the disbelieving people.", // Quran 12:87
+  "So surely with hardship, there is ease.", // Quran 94:5
+  "Verily, after hardship comes ease.", // Quran 94:6
+  "Unquestionably, by the remembrance of Allah hearts are assured.", // Quran 13:28
+];
+
+const quotesGrateful = [
+  // Add quotes related to feeling grateful
+  "And [remember] when your Lord proclaimed, 'If you are grateful, I will surely increase you [in favor]", // Quran 14:7
+  "And He gave you from all you asked of Him. And if you should count the favor of Allah , you could not enumerate it. Indeed, mankind is [generally] most unjust and ungrateful.", // Quran 14:34
+  "Therefore, remember Me (by praying, glorifying). I will remember you, and be grateful to Me (for My countless Favors on you) and never be ungrateful to Me.", // Quran 2:152
+  "And whatever you have of favor - it is from Allah.", // Quran 16:5
+  "It is He who made the sun a shining light and the moon a derived light and determined for it phases - that you may know the number of years and account [of time]. Allah has not created this except in truth. He details the signs for a people who know.",  // Quran 10:5
+  "Then which of the favors of your Lord will you deny?", // Quran 55:13 (This verse is repeated many times in Surah Ar-Rahman)
+  "And it is He who subjected the sea for you to eat from it tender meat and to extract from it ornaments which you wear, and you see the ships plowing through it, and [He subjected it] that you may seek of His bounty; and perhaps you will be grateful.", // Quran 16:14
+  "O you who have believed, eat from the good things which We have provided for you and be grateful to Allah if it is [indeed] Him that you worship.", // Quran 2:172
+  "And whatever you spend of expenditures - it is for yourselves, and you do not spend except seeking the countenance of Allah . And whatever you spend of expenditures - it will be fully repaid to you, and you will not be wronged.", // Quran 2:272
+  "And your Lord is going to give you, and you will be satisfied." // Quran 93:5
+];
+
+const quotesContent = [
+  // Add quotes related to feeling content
+  "Verily, in the remembrance of Allah do hearts find rest.", // Quran 13:28
+  "Those who believe, and whose hearts find satisfaction in the remembrance of Allah: for without doubt in the remembrance of Allah do hearts find satisfaction.", //Quran 13:28 
+  "And whoever turns away from My remembrance - indeed, he will have a depressed life, and We will gather him on the Day of Resurrection blind.", // Quran 20:124
+  "But those who believe and do righteous deeds - We will admit them to gardens beneath which rivers flow, wherein they will abide forever. [This is] the true promise from your Lord - a recompense bountiful!", // Quran 4:13
+  "And your Lord says, Call upon Me I will respond to you.",
+  "Indeed the righteous will be in gardens and pleasure  Enjoying what their Lord has given them and their Lord will have protected them from the punishment of Hellfire.", 
+  "Those who spend [in the cause of Allah ] during ease and hardship and who restrain anger and who pardon the people - and Allah loves the doers of good;", // Quran 3:146
+  "And whoever fears Allah - He will make for him of his affair ease.", // Quran 65:4
+  "It is He who shows mercy and whose mercy encompasses all things.", // Quran 40:6
+  "And give good tidings to those who believe and do righteous deeds that for them will be gardens [in Paradise] beneath which rivers flow..." // Quran 2:25 
+];
+const quotesMotivated = [
+  // Add quotes related to feeling motivated
+  "And that there is not for man except that [good] for which he strives", // Quran 53:39
+  "And those who strive for Us - We will surely guide them to Our ways. And indeed, Allah is with the doers of good.", // Quran 29:69
+  "So whoever does an atom's weight of good will see it, * And whoever does an atom's weight of evil will see it.", // Quran 99:7-8
+  "And We will surely test you with something of fear and hunger and a loss of wealth and lives and fruits, but give good tidings to the patient, * Who, when disaster strikes them, say, 'Indeed we belong to Allah , and indeed to Him we will return.'", // Quran 2:155-157
+  "Indeed, Allah does not change the condition of a people until they change what is in themselves.", // Quran 13:11
+  "And despair not of relief from Allah . Indeed, no one despairs of relief from Allah except the disbelieving people.", // Quran 12:87
+  "O you who have believed, respond to Allah and to the Messenger when he calls you to that which gives you life...", // Quran 8:24
+  "And say, Do as you will for Allah will surely see your deeds and [so will] His Messenger and the believers...", 
+  "And hasten to forgiveness from your Lord and a Garden [i.e., Paradise] as wide as the heavens and earth, prepared for the righteous...", // Quran 3:133
+  "The example of those who spend their wealth in the way of Allah is like a seed [of grain] which grows seven spikes; in each spike is a hundred grains. And Allah multiplies [His reward] for whom He wills. And Allah is all-Encompassing and Knowing." // Quran 2:261 
+
+];
+
+const quoteDisplay = document.getElementById('quote-display');
+
+// Function to get a random quote from an array
+function displayRandomQuote(quoteArray) {
+  const randomIndex = Math.floor(Math.random() * quoteArray.length);
+  quoteDisplay.textContent = `"${quoteArray[randomIndex]}"`;
+  quoteDisplay.classList.add('show'); 
+}
+
+// Add Event Listeners to All Buttons 
+document.getElementById('btn-sad').addEventListener('click', () => displayRandomQuote(quotesSad));
+document.getElementById('btn-lonely').addEventListener('click', () => displayRandomQuote(quotesLonely));
+document.getElementById('btn-sinner').addEventListener('click', () => displayRandomQuote(quotesSinner));
+document.getElementById('btn-anxious').addEventListener('click', () => displayRandomQuote(quotesAnxious));
+document.getElementById('btn-stressed').addEventListener('click', () => displayRandomQuote(quotesStressed));
+document.getElementById('btn-lost').addEventListener('click', () => displayRandomQuote(quotesLost));
+document.getElementById('btn-hopeless').addEventListener('click', () => displayRandomQuote(quotesHopeless));
+document.getElementById('btn-grateful').addEventListener('click', () => displayRandomQuote(quotesGrateful));
+document.getElementById('btn-content').addEventListener('click', () => displayRandomQuote(quotesContent));
+document.getElementById('btn-motivated').addEventListener('click', () => displayRandomQuote(quotesMotivated));
+
+const quotesCharity = [
+  
+"The likeness of those who spend their wealth in the way of Allah is like a seed [of grain] which grows seven spikes; in each spike is a hundred grains. And Allah multiplies [His reward] for whom He wills. And Allah is all-Encompassing and Knowing.", // Quran 2:261
+  "Those who spend their wealth [in Allah 's way] by night and by day, secretly and publicly - they will have their reward with their Lord. And no fear will there be concerning them, nor will they grieve.", // Quran 2:274
+  "Believe in Allah and His Messenger, and spend [in His way] from that of which He made you trustees; and those who believe among you and spend - those will have a great reward.", // Quran 57:7
+  "You will not attain piety until you spend [in the way of Allah ] from that which you love. And whatever you spend - indeed, Allah is Knowing of it.", // Quran 3:92
+  "And whatever good you do, - it is for yourselves. And whatever evil you do - it is against yourselves...", // Quran 2:132
+  "So give to the near relative his right, and [also] to the poor and the traveler. That is best for those who desire the countenance of Allah , and it is those who will be the successful.", // Quran 30:38
+  "Who spend [in the cause of Allah ] during ease and hardship and who restrain anger and who pardon the people - and Allah loves the doers of good", // Quran 3:134
+  "The example of those who spend their wealth in the way of Allah is like a garden on a hill which is hit by heavy rain so it produces its fruit doubled...", // Quran 2:265
+  "They ask you, [O Muhammad], what they should spend. Say, Whatever you spend of good is  for parents and relatives and orphans and the needy and the traveler. And whatever you do of good - indeed, Allah is Knowing of it.", // Quran 2:215
+  "Never will you attain the good [reward] until you spend [in the way of Allah ] from that which you love. And whatever you spend - indeed, Allah is Knowing of it." // Quran 3:92 
+];
+
+const quotesRizq = [
+ "And there is no creature on earth but that upon Allah is its provision, and He knows its place of dwelling and place of storage. All is in a clear register.", // Quran 11:6
+  "And how many a living creature carries not its [own] provision! Allah provides for it and for you. And He is the Hearing, the Knowing.", // Quran 29:60 
+  
+  "There is certainly in that a sign for you, if you are believers.", // Quran 16:13
+  "And We have certainly created for Hell many of the jinn and mankind. They have hearts that do not understand, they have eyes that do not see, and they have ears that do not hear. Those are like livestock; rather, they are more astray. It is they who are the heedless.", // Quran 7:179
+  "And whoever relies upon Allah - then He is sufficient for him. Indeed, Allah will accomplish His purpose. Allah has certainly set for everything a [decreed] extent.",  // Quran 65:3
+  "Or who is it that could be an army for you to aid you other than the Most Merciful? The disbelievers are only in delusion.",  // Quran 67:20
+  "And whoever fears Allah - He will make for him a way out. And will provide for him from where he does not expect. And whoever relies upon Allah - then He is sufficient for him. Indeed, Allah will accomplish His purpose. Allah has certainly set for everything a [decreed] extent.", // Quran 65:2-3 
+  " Who is it that prevents you from Allah [if you intend] to seek harm or benefit?", 
+
+  "And it is He who spread the earth and placed firmly set mountains and rivers; and from all the fruits He made therein two mates (of different sexes); He causes the night to cover the day. Indeed in that are signs for a people who give thought.", // Quran 13:3,
+
+  "And He gives you of all you ask of Him. And if you should count the favors of Allah , you could not enumerate them. Indeed, mankind is [generally] most unjust and ungrateful.", // Quran 14:34 
+  "It is He who created for you all of that which is on the earth. Then He directed Himself to the heaven, [His being above all creation], and made them seven heavens. And He is of all things Knowing.", // Quran 2:29
+  "And your Lord is the Most Generous - Who taught by the pen -  Taught man that which he knew not.", // Quran 96:3-5
+  "And it is He who sends down rain from the sky, and We produce thereby the growth of all things. We bring forth from it greenery, from which We produce grains in layers. And from the palm trees - from their emerging fruit are [clusters of] dates hanging low. And [We produce] gardens of grapevines and olives and pomegranates, similar and dissimilar. Look at their fruit, when they bear it, and its ripening. Indeed in that are signs for a people who believe.", // Quran 6:99
+  "It is He who made the sun a [shining] lamp and the moon a derived light and determined for it phases  that you may know the number of years and account [of time]. Allah has not created this except in truth. He details the signs for a people who know.", // Quran 10:5 
+  "And He it is Who has released [made subservient for you] the two seas, this fresh, sweet. and that salty. bitter. and He has set a barrier and a complete partition between them." ,// Quran 25:53 
+];
+
+// Get references to the new buttons
+const btnCharity = document.getElementById('btn-charity');
+const btnRizq = document.getElementById('btn-rizq');
+
+// Add event listeners to display quotes
+btnCharity.addEventListener('click', () => displayRandomQuote(quotesCharity));
+btnRizq.addEventListener('click', () => displayRandomQuote(quotesRizq));
+
+</script> 
+</body>
+</html>
+```
