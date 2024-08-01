@@ -12,7 +12,6 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <style>
 
-
 .button {
     background-color: #3498db;
     border: none;
@@ -491,20 +490,29 @@ body.dark-mode .button:hover {
         font-size: 12px; /* Decrease font size for smaller screens */
     }
 }
-.resetbutton{
-      background-color:rgba(94,117,139);
-            font-weight: bold;
-            margin-bottom: 6px;
-            height: 30px;
-            font-size: 15px;
-            width: 90px;
-            border-radius: 51px;
-            display: center;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-            padding: 10px px;
-            position: grid;
-            color:rgb(248, 246, 246);
-           margin-bottom: 20px;
+.resetbutton {
+    background-color: #6c757d; /* A more neutral color */
+    color: #ffffff; /* White text */
+    font-weight: bold;
+    height: 36px; /* Slightly larger height for better appearance */
+    width: 100px; /* Adjust width for a balanced look */
+    border-radius: 18px; /* Rounded corners */
+    border: none; /* No border */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    padding: 0 15px; /* Padding for better spacing */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+    font-size: 14px; /* Adjusted font size */
+}
+
+.resetbutton:hover {
+    background-color: #5a6268; /* Darker shade on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+.resetbutton:active {
+    background-color: #343a40; /* Even darker shade on active */
+    transform: translateY(1px); /* Slight depression effect */
 }
 
 .allheader{
@@ -551,6 +559,44 @@ body.dark-mode .button:hover {
       box-shadow: 0 7px 14px rgba(50, 50, 93, .1), 0 3px 6px rgba(0, 0, 0, .08);
     }
 
+    .dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+#dark-mode-toggle {
+    background-color: #fefffff4;
+}
+
+#dark-mode-toggle:before {
+    background-color: #1b1a1a;
+}
+
+body.dark-mode #dark-mode-toggle {
+    background-color: #2c2525;
+}
+
+body.dark-mode #dark-mode-toggle:before {
+    left: 26px;
+    background-color: #f5f1f1;
+}
+
+/* General Dark Mode Styles */
+body.dark-mode h1 {
+    color: #2a0404; /* Light color for dark mode */
+}
+
+/* If you have specific classes for h1 in dark mode */
+body.dark-mode .text-gray-800 {
+    color: #efecec; /* Light gray color for dark mode */
+}
+
+/* Example for classes with Tailwind-like naming conventions */
+body.dark-mode .text-gray-800 {
+    color: #250202; /* Adjust according to your color scheme */
+}
+
+
     </style>
 </head>
 <body>
@@ -568,7 +614,7 @@ body.dark-mode .button:hover {
        
         <button id="press">Press here</button>
 
-        <button class="resetbutton">reset</button>
+        <p>(to reset counter reload the screen)</p>
         <p id="counter-display">0</p>
         <div id="notification"></div>
         <div class="section-divider"></div>
@@ -1029,7 +1075,9 @@ body.dark-mode .button:hover {
         const body = document.body;
         const pressButton = document.getElementById('press');
         const counterDisplay = document.getElementById('counter-display');
-        let count = 0;
+         let  count = 0;
+
+          // Function to update the counter display
 
         tasbihBtn.addEventListener('click', () => {
             showSection(tasbihSection);
@@ -1462,7 +1510,22 @@ const btnRizq = document.getElementById('btn-rizq');
 btnCharity.addEventListener('click', () => displayRandomQuote(quotesCharity));
 btnRizq.addEventListener('click', () => displayRandomQuote(quotesRizq));
 
+
+darkModeToggle.addEventListener('change', () => {
+    body.classList.toggle('dark-mode');
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const body = document.body;
+
+    darkModeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+    });
+});
+
+
+
 </script> 
 </body>
 </html>
-```
